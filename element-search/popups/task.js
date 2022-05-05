@@ -1,17 +1,22 @@
-const modalMain = document.getElementById('modal_main');
-const modalClose = document.querySelector('.modal__close');
+const modalMain = document.querySelector('.modal', [0]);
+console.log(modalMain)
+const modalClose = document.querySelectorAll('.modal__close');
 const showSuccess = document.querySelector('a.show-success');
-console.log(showSuccess)
 const modalSuccess = document.getElementById('modal_success');
 
+modalMain.classList.add('modal_active')
 
-modalMain.classList.add('modal_active');
+for (let i = 0; i < modalClose.length; i++) {
+    modalClose[i].addEventListener('click', (e) => {
+       e.target.parentNode;
 
-modalClose.onclick = function() {
-    modalMain.style.display = 'none';
+        modalMain.classList.remove('modal_active')
+        modalSuccess.classList.remove('modal_active');
+    })
 }
 
-showSuccess.onclick = function() {
+showSuccess.addEventListener('click', () => {
     modalMain.classList.toggle('modal_active');
     modalSuccess.classList.toggle('modal_active');
-}
+})
+
