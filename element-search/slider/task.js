@@ -2,35 +2,38 @@ const prev = document.querySelector('.slider__arrow_prev');
 const next = document.querySelector('.slider__arrow_next');
 const sliderItems = document.querySelectorAll('.slider__item');
 
+const slider = (removable, current) => {
+    sliderItems[current].classList.add('slider__item_active');
+    sliderItems[removable].classList.remove('slider__item_active');
+}
 
-let i = 0;
-
-function slider() {
-    for (let i = 0; i < sliderItems.length; i++) {
-        sliderItems[i].classList.remove('slider__item_active');
-    }
-
-    sliderItems[i].classList.add('slider__item_active');
+function isCurrent (slider) {
+    return slider.classList.contains('slider__item_active');
 }
 
 prev.addEventListener('click', () => {
+    let currentIndex = Array.prototype.slice.call(sliderItems).findIndex(isCurrent);
+    let prevIndex;
 
-    if (i == 0) {
-        i = sliderItems.length - 1;       
+    if (currentIndex == 0) {
+        prevIndex = sliderItems.length - 1;       
     } else {
-        i--;
+        prevIndex = currentIndex - 1;
     }
-    slider();
+
+    slider(currentIndex, prevIndex);
 });
 
 next.addEventListener('click', () => {
+    let currentIndex = Array.prototype.slice.call(sliderItems).findIndex(isCurrent);
+    let nextIndex;
 
-    if (i + 1 == sliderItems.length) {
-        i = 0;
-        
+    if (currentIndex == sliderItems.length - 1) {
+        nextIndex = 0;       
     } else {
-        i++;
+        nextIndex = currentIndex + 1;
     }
-    slider();
+
+    slider(currentIndex, nextIndex);
 });
 
