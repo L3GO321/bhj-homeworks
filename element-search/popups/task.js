@@ -7,8 +7,7 @@ const modalSuccess = document.getElementById('modal_success');
 modalMain.classList.add('modal_active')
 
 for (let i = 0; i < modalClose.length; i++) {
-    modalClose[i].addEventListener('click', (e) => {
-       e.target.parentNode;
+    modalClose[i].addEventListener('click', () => {
 
         modalMain.classList.remove('modal_active')
         modalSuccess.classList.remove('modal_active');
@@ -16,7 +15,7 @@ for (let i = 0; i < modalClose.length; i++) {
 }
 
 showSuccess.addEventListener('click', () => {
-    modalMain.classList.toggle('modal_active');
-    modalSuccess.classList.toggle('modal_active');
+    modalMain.classList.remove('modal_active');
+    modalSuccess.classList.add('modal_active');
 })
 
