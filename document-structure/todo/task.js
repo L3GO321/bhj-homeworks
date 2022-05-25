@@ -15,16 +15,22 @@ const addTask = () => {
     input.value = '';
     const taskRemove = taskList.querySelector('.task:last-child .task__remove');
     taskRemove.addEventListener('click', (e) => removeTask(e));
+
 }
 
 const removeTask = (e) => {
     taskList.removeChild(e.target.parentNode);
 }
 
-addButton.addEventListener('click', addTask);
+const checkValue = () => {
+    return (input.value !== '' && input.value.trim() !== '');
+}
+
+addButton.addEventListener('click', () => checkValue() && addTask());
+
 input.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
-      e.preventDefault();
-      addTask();
+        e.preventDefault();
+        checkValue() && addTask();
     }
 });
