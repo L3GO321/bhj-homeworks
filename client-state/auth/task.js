@@ -4,39 +4,43 @@ const welcomeBlock = document.getElementById('welcome')
 const logoutButton = document.getElementById('logout__btn')
 
 const showWelcome = (id) => {
-    signInBlock.classList.remove('signin_active')
+    signInBlock.classList.remove('signin_active');
 
-    const useIdBlock = welcomeBlock.querySelector('#user_id')
-    useIdBlock.textContent = id
-    welcomeBlock.classList.add('welcome_active')
+    const useIdBlock = welcomeBlock.querySelector('#user_id');
+    useIdBlock.textContent = id;
+    welcomeBlock.classList.add('welcome_active');
 }
 
-const userId = localStorage.getItem('user_id')
+const userId = localStorage.getItem('user_id');
 
-userId && showWelcome(userId)
+userId && showWelcome(userId);
 
 
 signInForm.addEventListener('submit', (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    const url = signInForm.getAttribute('action')
-    const formData = new FormData(signInForm)
+    const url = signInForm.getAttribute('action');
+    const formData = new FormData(signInForm);
 
-    const request = new XMLHttpRequest()
-    request.open('POST', url)
-    request.send(formData)
+    const request = new XMLHttpRequest();
+    request.open('POST', url);
+    request.responseType = 'json';
+    request.send(formData);
 
     request.onload = () => {
-        const response = JSON.parse(request.response)
+        const response = request.response;
 
         if (response.success) {
-            localStorage.setItem('user_id', response.user_id)
-            showWelcome(response.user_id)
+            signInForm.reset();
+            localStorage.setItem('user_id', response.user_id);
+            showWelcome(response.user_id);
         }
     }
 })
 
 logoutButton.addEventListener('click', () => {
-    localStorage.removeItem('user_id')
-    document.location.reload()
+    localStorage.removeItem('user_id');
+
+    signInBlock.classList.add('signin_active');
+    welcomeBlock.classList.remove('welcome_active');
 })
